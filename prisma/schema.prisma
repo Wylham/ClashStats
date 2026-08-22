@@ -1,8 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
   provider = "prisma-client"
   output   = "../generated/prisma"
@@ -10,4 +5,44 @@ generator client {
 
 datasource db {
   provider = "postgresql"
+}
+
+model Clan {
+  id Int @id @default(autoincrement())
+  tag String @unique
+  name String 
+  description String?
+  requiredTownhallLevel Int
+  warFrequency WarFrequency
+  clanLevel Int
+  warWinStreak Int
+  warWins Int
+  warTies Int
+  warLosses Int
+  clanPoints Int
+  clanBuilderBasePoints Int
+  clanCapitalPoints Int
+  isFamilyFriendly Boolean
+  requiredTrophies Int
+  requiredBuilderBaseTrophies Int
+  isWarLogPublic Boolean
+  type ClanType
+  members Int
+  capitalHallLevel Int
+}
+
+enum WarFrequency {
+  UNKNOWN
+  ALWAYS
+  MORE_THAN_ONCE_PER_WEEK
+  ONCE_PER_WEEK
+  LESS_THAN_ONCE_PER_WEEK
+  NEVER
+  ANY
+}
+
+enum ClanType {
+    OPEN
+    INVITE_ONLY
+    CLOSED
 }

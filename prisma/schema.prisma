@@ -28,7 +28,28 @@ model Clan {
   isWarLogPublic Boolean
   type ClanType
   members Int
-  capitalHallLevel Int
+  warLeagueId   Int?
+  warLeagueName String?
+  capitalLeagueId   Int?
+  capitalLeagueName String?
+  chatLanguageId   Int?
+  chatLanguageName String?
+  requiredLeagueTierId   Int?
+  requiredLeagueTierName String?
+  locationId          Int?
+  locationName        String?
+  locationIsCountry   Boolean?
+  locationCountryCode String?
+  badgeSmallUrl  String?
+  badgeMediumUrl String?
+  badgeLargeUrl  String?
+}
+
+model ClanLabel {
+  id      Int    @id @default(autoincrement())
+  clanId  Int
+  labelId Int
+  name    String
 }
 
 enum WarFrequency {

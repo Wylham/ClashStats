@@ -1,13 +1,129 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
   provider = "prisma-client"
-  output   = "../generated/prisma"
+  output   = "../src/generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
+}
+
+model Clan {
+  id Int @id @default(autoincrement())
+  tag String @unique
+  name String
+  description String?
+  requiredTownhallLevel Int
+  warFrequency WarFrequency
+  clanLevel Int
+  warWinStreak Int
+  warWins Int
+  warTies Int
+  warLosses Int
+  clanPoints Int
+  clanBuilderBasePoints Int
+  clanCapitalPoints Int
+  isFamilyFriendly Boolean
+  requiredTrophies Int
+  requiredBuilderBaseTrophies Int
+  isWarLogPublic Boolean
+  type ClanType
+  members Int
+
+  warLeagueId Int?
+  warLeagueName String?
+
+  capitalLeagueId Int?
+  capitalLeagueName String?
+
+  chatLanguageId Int?
+  chatLanguageName String?
+
+  requiredLeagueTierId Int?
+  requiredLeagueTierName String?
+
+  locationId Int?
+  locationName String?
+  locationIsCountry Boolean?
+  locationCountryCode String?
+
+  badgeSmallUrl String?
+  badgeMediumUrl String?
+  badgeLargeUrl String?
+
+  players Player[]
+}
+
+enum WarFrequency {
+  UNKNOWN
+  ALWAYS
+  MORE_THAN_ONCE_PER_WEEK
+  ONCE_PER_WEEK
+  LESS_THAN_ONCE_PER_WEEK
+  NEVER
+  ANY
+}
+
+enum ClanType {
+  OPEN
+  INVITE_ONLY
+  CLOSED
+}
+
+model Player {
+  id Int @id @default(autoincrement())
+  tag String @unique
+  name String
+
+  clanId Int?
+  clan Clan? @relation(fields: [clanId], references: [id])
+
+  expLevel Int
+  trophies Int
+  bestTrophies Int
+  attackWins Int
+  defenseWins Int
+  townHallLevel Int
+  townHallWeaponLevel Int
+  donations Int
+  donationsReceived Int
+  builderHallLevel Int
+  builderBaseTrophies Int
+  bestBuilderBaseTrophies Int
+  warStars Int
+  clanCapitalContributions Int
+  role PlayerRole
+  warPreference WarPreference
+
+  leagueId Int?
+  leagueName String?
+  leagueIconSmall String?
+  leagueIconMedium String?
+  leagueIconTiny String?
+
+  leagueTierId Int?
+  leagueTierName String?
+
+  builderBaseLeagueId Int?
+  builderBaseLeagueName String?
+
+  currentLeagueGroupTag String?
+  currentLeagueSeasonId BigInt?
+
+  previousLeagueGroupTag String?
+  previousLeagueSeasonId BigInt?
+
+  @@index([clanId])
+}
+
+enum PlayerRole {
+  NOT_MEMBER
+  MEMBER
+  LEADER
+  ADMIN
+  COLEADER
+}
+
+enum WarPreference {
+  OUT
+  IN
 }
